@@ -23,10 +23,12 @@ Start a standalone server with default settings
 
 ```
 node server --start
+```
 
-or
+Start with custom settings. Pass in path to configuration file
 
-node server --start customConfig
+```
+node server --start path/to/customConfig.js
 ```
 
 Can also be started and stopped programatically
