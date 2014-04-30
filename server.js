@@ -85,9 +85,18 @@ Server.prototype.start = function(){
 
 module.exports = Server
 
+var start = false
+var config = defaults
+
 process.argv.forEach(function(val,index,array){
   if(val == 'start' || val == '--start'){
-    var server = new Server(defaults)
-    server.start()
+    start = true
+    var i = index +1
+    config = require(array[i]) || defaults
+  }
+  if(index === array.length-1){
+    if(start){
+      new Server(config).start()
+    }
   }
 })
