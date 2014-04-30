@@ -4,7 +4,7 @@
 module.exports = {
   port:97892
   ,name:'level fancy server'
-  ,manifest:'/tmp/scada-manifest.json'
+  ,manifest:'/tmp/fancy-manifest.json'
   ,database:'./database'    //location of database folder
   ,timeout:0 //will disconnect a client in X milliseconds of inactivity, 0 disables
   //passes configuration options when starting leveldb
