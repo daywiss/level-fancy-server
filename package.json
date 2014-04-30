@@ -30,6 +30,7 @@
     "level-sec": "^1.3.0",
     "multilevel": "^6.0.0",
     "level": "^0.18.0",
-    "memdown": "^0.8.0"
+    "memdown": "^0.8.0",
+    "minimist": "0.0.8"
   }
 }

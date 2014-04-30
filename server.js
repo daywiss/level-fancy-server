@@ -1,4 +1,5 @@
 var defaults = require('./config')
+var argv = require('minimist')(process.argv.slice(2))
 var multilevel = require('multilevel');
 var net = require('net');
 var level = require('level');
@@ -85,18 +86,10 @@ Server.prototype.start = function(){
 
 module.exports = Server
 
-var start = false
-var config = defaults
-
-process.argv.forEach(function(val,index,array){
-  if(val == 'start' || val == '--start'){
-    start = true
-    var i = index +1
-    config = require(array[i]) || defaults
+if(argv.start){
+  var config = defaults
+  if(typeof argv.start === 'string'){
+    config = require(argv.start)
   }
-  if(index === array.length-1){
-    if(start){
-      new Server(config).start()
-    }
-  }
-})
+  new Server(config).start()
+}
