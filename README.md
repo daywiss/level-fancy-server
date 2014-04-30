@@ -28,7 +28,7 @@ node server --start
 Start with custom settings. Pass in path to configuration file
 
 ```
-node server --start path/to/customConfig.js
+node server --start ./path/to/customConfig.js
 ```
 
 Can also be started and stopped programatically
