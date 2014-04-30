@@ -24,6 +24,10 @@ Start a standalone server with default settings
 
 ```
 node server --start
+
+or
+
+node server --start customConfig
 ```
 
 Can also be started and stopped programatically
