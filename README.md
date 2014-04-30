@@ -41,8 +41,9 @@ server.stop()
 
 ## Configuration
 View default configuration file: `config.js`
+
 By default the database uses in memory storage with memdown. Comment out
 `db:require('memdown')` to enable storage to disk.
 
-See [level-fancy](https://github.com/dadams/level-fancy) for connecting with clients.
+See [level-fancy](https://github.com/daywiss/level-fancy) for connecting with clients.
 
