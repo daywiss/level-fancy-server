@@ -12,6 +12,28 @@ module.exports = {
     valueEncoding:'json'
     ,db:require('memdown') //uncomment to use in memory storage. Will ignore database option.
   }
+  //enable authentication for client connections, by default a user has full access unless denied
+  //operations: get,put,del,batch,write
+  ,auth:{
+    enabled:true
+    ,users:[
+      {
+        name:'read'
+        ,pass:'daer'
+        ,deny:['put','del','batch','write']
+      }
+      ,{
+        name:'write'
+        ,pass:'etirw'
+        ,deny:['del','batch']
+      }
+      ,{
+        name:'root'
+        ,pass:'toor'
+      }
+      
+    ]
+  }
   //Define sublevels and secondary indexes here. Follow example conventions.
   //Uses sublevel and level-sec: 
   //https://github.com/dominictarr/level-sublevel

@@ -5,8 +5,8 @@ var net = require('net');
 var level = require('level');
 var sub = require('level-sublevel')
 var sec = require('level-sec')
-var createManifest = require('level-manifest')
 var LiveStream = require('level-live-stream')
+var createManifest = require('level-manifest')
 
 
 function Server(config){
@@ -14,14 +14,46 @@ function Server(config){
   this.db = null
 }
 
+function stop(server){
+  server.db.close()
+  server.netServer.close()
+  server.db = null
+}
 Server.prototype.stop = function(){
-  this.netServer.close()
+  stop(this)
 }
 Server.prototype.close = function(){
-  this.netServer.close()
+  stop(this)
 }
 
+function authentication(config){
+  var users = config.auth.users
+  var result = { }
+  if(config.auth.enabled === true){
+    result.auth=function(user,cb){
+      for(var i in users){
+        if(user.name === users[i].name && user.pass === users[i].pass){
+          return cb(null,users[i])
+        }
+      }
+      cb(new Error('Not Authorized'))
+    }
+    result.access = function(user,db,method,args){
+      //console.log(user,method,args)  
+      if(user == null){
+        throw Error('Access Denied. Client must use client.auth()')
+      }
+      else if(user.deny){
+        if(new RegExp(user.deny.join('|'),'i').test(method)){
+          throw Error('Access Denied to', user.name,method)
+        }
+      }
+    }
+  }
+  return result
+}
 Server.prototype.start = function(){
+  if(this.db != null) return
   var config = this.config
   var self = this
   
@@ -66,9 +98,9 @@ Server.prototype.start = function(){
       console.log('ended connection')
       this.destroy()
     })
-    var ml = multilevel.server(db)
+    var ml = multilevel.server(db,authentication(this.config))
       .on('error',function(err){
-        console.log('db error',err)
+        console.log('multilevel error',err)
       })
     con.pipe(ml).pipe(con);
   })
@@ -80,7 +112,7 @@ Server.prototype.start = function(){
   })
   self.db = db
   self.netServer = server 
-  return self
+  return multilevel.server(db,authentication(this.config))
 }
 
 
