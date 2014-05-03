@@ -28,9 +28,9 @@ Server.prototype.close = function(){
 }
 
 function authentication(config){
-  var users = config.auth.users
   var result = { }
   if(config.auth.enabled === true){
+    var users = config.auth.users
     result.auth=function(user,cb){
       for(var i in users){
         if(user.name === users[i].name && user.pass === users[i].pass){
@@ -99,7 +99,7 @@ Server.prototype.start = function(){
       console.log('ended connection')
       this.destroy()
     })
-    var ml = multilevel.server(db,authentication(this.config))
+    var ml = multilevel.server(db,authentication(self.config))
       .on('error',function(err){
         console.log('multilevel error',err)
       })
@@ -113,7 +113,7 @@ Server.prototype.start = function(){
   })
   self.db = db
   self.netServer = server 
-  return multilevel.server(db,authentication(this.config))
+  return multilevel.server(db,authentication(self.config))
 }
 
 
