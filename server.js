@@ -7,6 +7,7 @@ var sub = require('level-sublevel')
 var sec = require('level-sec')
 var LiveStream = require('level-live-stream')
 var createManifest = require('level-manifest')
+var path = require('path')
 
 
 function Server(config){
@@ -121,7 +122,7 @@ module.exports = Server
 if(argv.start){
   var config = defaults
   if(typeof argv.start === 'string'){
-    config = require(argv.start)
+    config = require(path.join(__dirname,argv.start))
   }
   new Server(config).start()
 }
