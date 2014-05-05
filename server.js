@@ -29,6 +29,7 @@ Server.prototype.close = function(){
 
 function authentication(config){
   var result = { }
+  if(config.auth == null) return result
   if(config.auth.enabled === true){
     var users = config.auth.users
     result.auth=function(user,cb){
