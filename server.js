@@ -66,6 +66,7 @@ Server.prototype.start = function(){
   //create sublevels from config file
   for(var i in config.sublevels){
     var sl = config.sublevels[i]
+    console.log('sublevel',sl.name)
     sublevel = db.sublevel(sl.name)
     //add livestream for each sublevel
     LiveStream.install(sublevel)
@@ -73,6 +74,7 @@ Server.prototype.start = function(){
     var tmpsec
     for(var i in sl.indices){
       var index = sl.indices[i]
+      console.log(sl.name,index.name)
       tmpsec=sec(sublevel).by(index.name,index.keys)
       sublevel = tmpsec.db
     }
