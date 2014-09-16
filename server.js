@@ -125,7 +125,7 @@ module.exports = Server
 if(argv.start){
   var config = defaults
   if(typeof argv.start === 'string'){
-    config = require(path.join(__dirname,argv.start))
+    config = require(path.join(process.cwd(),argv.start))
   }
   new Server(config).start()
 }
