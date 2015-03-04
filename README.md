@@ -35,9 +35,27 @@ Can also be started and stopped programatically
 
 ```
 var Server = require('level-fancy-server').Server
+var client = require('multilevel').client(manifest)
+
+//returns the multilevel server which multi level clients can connect to
 var server = new Server().start()
+
+server.pipe(client.createRpcStream()).pipe(server)
+
+client.sublevel.put ...
+...
+//shut down server
 server.stop()
 ```
+If you want direct access to the leveldb database not the multi level wrapper, then do this
+
+```
+var server = new Server()
+var multilevel = server.start()
+//access the db object on server
+server.db.sublevel.put ...
+```
+
 
 ## Configuration
 View default configuration file: `config.js`
