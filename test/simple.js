@@ -1,3 +1,3 @@
 var Server = require('..').Server
 var server = new Server().start()
-setTimeout(server.stop.bind(server),3000)
+setTimeout(server.stop,3000)
